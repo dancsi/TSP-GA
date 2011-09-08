@@ -1,9 +1,15 @@
 \documentclass[titlepage]{article}
-\usepackage{amssymb,amsmath,latexsym}
+\usepackage{amsthm,amssymb,amsmath,latexsym}
 \usepackage[serbian]{babel}	
 \usepackage[T1]{fontenc}
-\newcommand{\qed}{\hfill $\Box$\vspace*{4mm}}
-\newtheorem{df}{Definicija}
+%\newcommand{\qed}{\hfill $\Box$\vspace*{4mm}}
+\newtheorem{thm}{Teorema}[section]
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Napomena}
+
+\theoremstyle{definition}
+\newtheorem{df}[thm]{Definicija}
 \begin{document}
 
 	\title{\sc Geneteski Algoritmi i Problem Trgova\v{c}kog Putnika}
@@ -18,21 +24,8 @@
 	\end{abstract}
 
 	\section{Uvod}
-
-    	\subsection{\v{S}ta su genetski algoritmi i \v{c}emu slu\v{z}e?}
-    		Genetski algoritmi (u daljem tekstu GA) su porodica algoritama inspirisanih Darvinovom teorijom evolucije. Prvi radovi iz ove oblasti su nastali 60-tih godina pro\v{s}log veka, ali se u ve\'{c}ini izvora kao tvorac ove oblasti uzima John Holland. On je 1975. godine napisao knjigu "Adaptation in natural and artificial systems".
-        GA imaju za cilj re\v{s}avanje problema kombinatorne optimizacije, tj problema u kojima se tra\v{z}i minimum ili maksimum neke funkcije . Po\v{s}to je prostor pretra\v{z}ivanja (skup re\v{s}enja) ponekad prevelik (i njegovo kompletno pretra\v{z}ivanje se ne mo\v{z}e izvr\v{s}iti u nekom doglednom vremenu), a optimalno re\v{s}enje nije neophodno (prihvata se i neko pribli\v{z}no, suboptimalno re\v{s}enje), mogu se koristiti genetski algoritmi. \\
-      U GA, svako pjedina\v{c}no re\v{s}enje je predstavljeno jednom jedinkom, koja sadr\v{z}i gene, tj delove re\v{s}enja. Nad njima se vr\v{s}e operatori mutacije i ukr\v{s}tanja (kao mehanizam pretrage) i selekcije (usmerava algoritam ka perspektivnim delovima pretra\v{z}iva\v{c}kog prostora).
-
-    	\subsection{Osnovni operatori u genetskim algoritmima}
-            \subsubsection{Selekcija}
-            U osnovnim crtama, princip rada selekcije je sli\v{c}an kao u stvarnom \v{z}ivotu: cilj je da se odabere genetski materijal koji ce se preneti u narednu generaciju. Kod ovog operatora je bitno sa\v{c}uvati raznovrsnost, kao i kvalitet genetskog materiala, ina\v{c}e \'{c}e se dobra re\v{s}enja mo\v{z}da zauvek izgubiti.
-            \subsubsection{Ukr\v{s}tanje}
-            Cilj ovog operatora je da se ukr\v{s}tanjem dva postoje\'{c}a re\v{s}enja dobiju nova, obi\v{c}no kvalitetnija re\v{s}enja.
-            \subsubsection{Mutacija}
-            Mutacijom se vra\'{c}a raznovrsnog genetskog materijala u populaciju. Ipak, prekomerna mutacija mo\v{z}e svesti algoritam na nasumi\v{c}nu pretragu, pa se zato uvodi verovatnoca mutacije, koja je uglavnom manja od 5\%.
-    	\subsection{\v{S}ta su NP problemi?}
-    	NP problemi su klasa problema za koje se veruje da ne postoji deterministi\v{c}ki polinomni algoritam koji ih re\v{s}ava. Ta\v{c}nije, NP problemi obuhvataju NP tvrde (kojima pripada i problem Trgova\v{c}kog putnika) i NP kompletne.
+        \subsection{\v{S}ta su NP problemi?}
+    	NP problemi su (neformalno) klasa problema za koje se veruje da ne postoji deterministi\v{c}ki polinomni algoritam koji ih re\v{s}ava. Ta\v{c}nije, NP problemi obuhvataju NP tvrde (kojima pripada i problem Trgova\v{c}kog putnika) i NP kompletne.
         \begin{description}
           \item[NP kompletni] problemi su ,,te\v{s}ki'' za re\v{s}avanje, ali se provera korektnosti njihovih re\v{s}enja izvodi u polinomnom vremenu
           \item[NP tvrdi] problemi su te\v{s}ki bar koliko i najte\v{z}i NP kompletni problemi, ali za proveravanje njihovih re\v{s}enja ne postoji algoritam polinomne slo\v{z}enosti
@@ -46,12 +39,84 @@
         \begin{df}
         Ako je dat skup gradova i du\v{z}ina puta L, treba odrediti da li postoji Hamiltonov put kra\'{c}i od L?
         \end{df}
+    	\subsection{\v{S}ta su genetski algoritmi i \v{c}emu slu\v{z}e?}
+    		Genetski algoritmi (u daljem tekstu GA) su porodica algoritama inspirisanih Darvinovom teorijom evolucije. Prvi radovi iz ove oblasti su nastali 60-tih godina pro\v{s}log veka, ali se u ve\'{c}ini izvora kao tvorac ove oblasti uzima John Holland. On je 1975. godine napisao knjigu "Adaptation in natural and artificial systems".
+        GA imaju za cilj re\v{s}avanje problema kombinatorne optimizacije, tj problema u kojima se tra\v{z}i minimum ili maksimum neke funkcije . Po\v{s}to je prostor pretra\v{z}ivanja (skup re\v{s}enja) ponekad prevelik (i njegovo kompletno pretra\v{z}ivanje se ne mo\v{z}e izvr\v{s}iti u nekom doglednom vremenu), a optimalno re\v{s}enje nije neophodno (prihvata se i neko pribli\v{z}no, suboptimalno re\v{s}enje), mogu se koristiti genetski algoritmi. \\
+      U GA, svako pjedina\v{c}no re\v{s}enje je predstavljeno jednom jedinkom, koja sadr\v{z}i gene, tj delove re\v{s}enja. Nad njima se vr\v{s}e operatori mutacije i ukr\v{s}tanja (kao mehanizam pretrage) i selekcije (usmerava algoritam ka perspektivnim delovima pretra\v{z}iva\v{c}kog prostora).
+
+    	\subsection{Osnovni operatori u genetskim algoritmima}
+            \subsubsection{Fitness funkcija}
+            \begin{df}
+                Fitness funkcija je genetski operator koji svakoj jedinki dodeljuje vrednost $f_i$ koja oslikava kvalitet te jedinke.
+            \end{df}
+            Kod TSP, to je ukupna du\v{z}ina puta predstavljenog tom jedinkom.
+            \subsubsection{Selekcija}
+            U osnovnim crtama, princip rada selekcije je sli\v{c}an kao u stvarnom \v{z}ivotu: cilj je da se odabere genetski materijal koji ce se preneti u narednu generaciju. Kod ovog operatora je bitno sa\v{c}uvati raznovrsnost, kao i kvalitet genetskog materiala, ina\v{c}e \'{c}e se dobra re\v{s}enja mo\v{z}da zauvek izgubiti.
+            \begin{df}
+                Selekcija je genetski operator koji bira jedinke koje \'{c}e se ukr\v{s}tati i/ili preneti u slede\'{c}u generaciju.
+            \end{df}
+            \subsubsection{Ukr\v{s}tanje}
+            \begin{df}
+                Ukr\v{s}tanje je genetski operator koji na osnovu 2 date jedinke (roditelja) konstrui\v{s}e 2 nove jedinke (decu), koje su nastale kombinovanjem genetskog materijala roditelja.
+            \end{df}
+            Cilj ovog operatora je da se ukr\v{s}tanjem dva postoje\'{c}a re\v{s}enja dobiju nova, obi\v{c}no kvalitetnija re\v{s}enja.
+            \subsubsection{Mutacija}
+            \begin{df}
+                Mutacija genetski operator koji (uglavnom) nasumi\v{c}no mutira genetski materijal date jedinke.
+            \end{df}
+            Mutacijom se vra\'{c}a raznovrsnog genetskog materijala u populaciju. Ipak, prekomerna mutacija mo\v{z}e svesti algoritam na nasumi\v{c}nu pretragu, pa se zato uvodi verovatnoca mutacije, koja je uglavnom manja od 5\%.
     \section{Kori\v{s}\'{c}ene metode}
         \subsection{Selekcija}
         U ovom radu su kori\v{s}cena su dva algoritma za selekciju:
+        \begin{rem}
+            Promenljiva $f_i$ predstavlja vrednost fitness-funkcije $i$-te jedinke u populaciji,  $p_i$ verovatnocu da bas $i$-ta jedinka bude odabrana prilikom selekcije, a $r_i$ rang $i$-te jedinke, tako da najkvalitetnija jedinka (gledaju\'{c}i fitness) ima rang $1$, a najnekvalitetnija $n$. Tako\dj{}e, va\v{z}i pretpostavka da u populaciji ima ta\v{c}no $n$ jedinki.
+        \end{rem}
         \begin{description}
-          \item[Prosta, rulet selekcija] 
-          \item[Selekcija zasnovana na rangu] sdf
+          \item[Prosta, rulet selekcija]
+            Svaka jedinka ima verovatno\'{c}u selekcije direktno proporcionalnu njenoj fitness-vrednosti, tj: $$p_i=\frac{f_i}{\sum_{i=1}^{n}{f_j}}$$
+          \item[Selekcija zasnovana na rangu]
+            Svaka jedinka ima verovatno\'{c}u selekcije direktno proporcionalnu njenom rangu, tj: $$p_i=\frac{r_i}{\sum_{i=1}^{n}{j}}$$
         \end{description}
-
+        \subsection{Ukr\v{s}tanje}
+        Kori\v{s}cena su 2 algoritma za ukr\v{s}tanje:
+        \begin{description}
+          \item[Ukr\v{s}tanje rekombinacijom grana (edge recombination)]
+            Ovaj algoritam od 2 roditelja pravi 1 dete, i to na sledeci nacin:
+            \begin{enumerate}
+              \item Konstrui\v{s}e matrice povezanosti:
+              $\begin{array}{ccc}
+                g_1: & g_n & g_2 \\
+                g_2: & g_1 & g_3 \\
+                \vdots & \vdots & \vdots \\
+                g_n: & g_{n-1} & g_1  \\
+              \end{array}$
+              \textbf{,}
+              $\begin{array}{ccc}
+                g'_1: & g'_n & g'_2 \\
+                g'_2: & g'_1 & g'_3 \\
+                \vdots & \vdots & \vdots \\
+                g'_n: & g'_{n-1} & g'_1  \\
+              \end{array}$
+              \item Napravi njihovu uniju
+               $\begin{array}{ccccc}
+                g_1 = g'_{i_1}: & g_n & g_2 & g'_{i_{1}-1} & g'_{i_{1}+1} \\
+                g_2 = g'_{i_2}: & g_1 & g_3 & g'_{i_{2}-1} & g'_{i_{2}+1} \\
+                \vdots & \vdots & \vdots & \vdots & \vdots \\
+                g_n = g'_{i_n}: & g_{n-1} & g_1 & g'_{i_{n}-1} & g'_{i_{n}+1}  \\
+              \end{array}$
+              \item Napravi novu praznu listu $L$
+              \item Odabere po\v{c}etni \v{c}vor $L_1$
+              \item Odabere cvorove $L_2, \ldots L_{n-1}, L_n$ po sledecem principu:\\
+              $L_{i+1}$ je sused \v{c}vora $L_i$, takav da $L_{i+1}$ ima najmanji mogu\'{c}i broj suseda, i ne nalazi se ve\'{c} u $L$
+              \item Lista $L$ je nova jedinka
+            \end{enumerate}
+          \item[Ukr\v{s}tanje parcijalnim mapiranjem] Ovaj algoritam proizvodi 2 potomka od 2 roditelja.
+          \begin{itemize}
+            \item Odaberu se 2 cvora po slu\v{c}ajnom izboru, $a$ i $b$
+            \item Iz roditelja 1 se kopira put od $a$ do $b$ u dete 1, a iz roditelja 2 u dete 2.
+            \item Dokle god to mo\v{z}e (tj. dok se svaki \v{c}vor javalja samo jednom u detetu), algoritam popunjava pozicije u detetu 1 sa putevima iz roditelja 2 i  u detetu 2 sa putevima iz roditelja 2
+            \item Ostatak \v{c}vorova se u decu dodaje na slu\v{c}ajan na\v{c}in
+          \end{itemize}
+        \end{description}
+        
 	\end{document} 

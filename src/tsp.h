@@ -23,6 +23,7 @@ extern int ntowns;
 extern float** DISTANCE;
 extern int* CLOSEST;
 extern int (*XOVER)(const GAGenome& , const GAGenome& , GAGenome* , GAGenome* );
+extern int (*Mutator)(GAGenome& g, float pmut);
 extern GAPopulation& pop;
 extern GAListGenome<int>* genome;
 extern GASteadyStateGA* ga;

@@ -1,6 +1,30 @@
 #include "Mutator.h"
 
-int Mutator(GAGenome& g, float pmut)
+int Mutator_2opt(GAGenome& g, float pmut)
+{
+	if ((GARandomFloat() >= pmut) || (pmut <= 0)) return 0;
+	GAListGenome<int>& child=(GAListGenome<int> &)g;
+    GAListIter<int> cura(child), nexta(child);
+	nexta.next();
+	
+	for(int i=0;i<ntowns;i++, cura.next(), nexta.next())
+	{
+		GAListIter<int> curb(child), nextb(child);
+		nextb.next();
+		
+		for(int j=0;j<ntowns;j++, curb.next(), nextb.next())
+		{
+			if(DISTANCE[*cura.current()][*nexta.current()]+DISTANCE[*curb.current()][*nextb.current()]>
+				DISTANCE[*cura.current()][*nextb.current()]+DISTANCE[*curb.current()][*nexta.current()])
+			{
+				std::swap(*nexta.current(), *nextb.current());
+			}
+		}
+	}
+	return 1;
+}
+
+int Mutator_old(GAGenome& g, float pmut)
 {
     GAListGenome<int> &child=(GAListGenome<int> &)g;
     register int n, i;

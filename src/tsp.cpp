@@ -11,6 +11,8 @@ int* CLOSEST;
 //int (*XOVER)(const GAGenome& , const GAGenome& , GAGenome* , GAGenome* ) = PMXover;       // (Partial Match Crossover)
 int (*XOVER)(const GAGenome& , const GAGenome& , GAGenome* , GAGenome* ) = ERXover;       // (Edge Recombination Crossover)
 
+int (*Mutator)(GAGenome& g, float pmut) = Mutator_2opt;
+
 GAListGenome<int>* genome;
 GASteadyStateGA* ga;
 int seed;

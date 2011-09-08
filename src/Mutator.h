@@ -4,6 +4,7 @@
 
 #include "tsp.h"
 
-int Mutator(GAGenome& g, float pmut);
+int Mutator_2opt(GAGenome& g, float pmut);
+int Mutator_old(GAGenome& g, float pmut);
 
 #endif // MUTATOR_H_INCLUDED
