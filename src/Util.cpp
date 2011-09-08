@@ -38,14 +38,6 @@ void Initializer(GAGenome& _g)
 }
 
 
-//   Here we override the _write method for the List class.  This lets us see
-// exactly what we want (the default _write method dumps out pointers to the
-// data rather than the data contents).
-//   This routine prints out the contents of each element of the list,
-// separated by a space.  It does not put a newline at the end of the list.
-//   Notice that you can override ANY function of a template class.  This is
-// called "specialization" in C++ and it lets you tailor the behaviour of a
-// template class to better fit the type.
 template <> int GAListGenome<int>::write(std::ostream & os) const
 {
     int *cur, *head;

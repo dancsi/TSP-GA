@@ -1,9 +1,5 @@
 #include "Objective.h"
 
-
-// Here are the genome operators that we want to use for this problem.
-// Thanks to Jan Kees IJspeert for isolating an order-of-evaluation problem
-// in the previous implementation of this function.
 float Objective(GAGenome& g)
 {
     GAListGenome<int> & genome = (GAListGenome<int> &)g;
