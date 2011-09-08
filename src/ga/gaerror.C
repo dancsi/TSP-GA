@@ -21,7 +21,7 @@ char _gaerrbuf2[120];
 static STD_OSTREAM *__gaErrStream = & STD_CERR;
 #endif
 static GABoolean __gaErrFlag = gaTrue;
-static char *__gaErrStr[] = {
+const static char* __gaErrStr[] = {
   "error reading from file: ",
   "error writing to file: ",
   "unexpected EOF encountered during read.",
