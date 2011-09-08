@@ -1,0 +1,57 @@
+\documentclass[titlepage]{article}
+\usepackage{amssymb,amsmath,latexsym}
+\usepackage[serbian]{babel}	
+\usepackage[T1]{fontenc}
+\newcommand{\qed}{\hfill $\Box$\vspace*{4mm}}
+\newtheorem{df}{Definicija}
+\begin{document}
+
+	\title{\sc Geneteski Algoritmi i Problem Trgova\v{c}kog Putnika}
+
+	\author{Daniel Sila\dj i\\
+		Gimnazija "Jovan Jovanovi\'{c} Zmaj"\\
+		Novi Sad}
+	\maketitle
+
+	\begin{abstract}
+		Ovaj rad se bavi primenom genetskih algoritama u re\v{s}avanju problema trgova\v{c}kog putnika. \\
+	\end{abstract}
+
+	\section{Uvod}
+
+    	\subsection{\v{S}ta su genetski algoritmi i \v{c}emu slu\v{z}e?}
+    		Genetski algoritmi (u daljem tekstu GA) su porodica algoritama inspirisanih Darvinovom teorijom evolucije. Prvi radovi iz ove oblasti su nastali 60-tih godina pro\v{s}log veka, ali se u ve\'{c}ini izvora kao tvorac ove oblasti uzima John Holland. On je 1975. godine napisao knjigu "Adaptation in natural and artificial systems".
+        GA imaju za cilj re\v{s}avanje problema kombinatorne optimizacije, tj problema u kojima se tra\v{z}i minimum ili maksimum neke funkcije . Po\v{s}to je prostor pretra\v{z}ivanja (skup re\v{s}enja) ponekad prevelik (i njegovo kompletno pretra\v{z}ivanje se ne mo\v{z}e izvr\v{s}iti u nekom doglednom vremenu), a optimalno re\v{s}enje nije neophodno (prihvata se i neko pribli\v{z}no, suboptimalno re\v{s}enje), mogu se koristiti genetski algoritmi. \\
+      U GA, svako pjedina\v{c}no re\v{s}enje je predstavljeno jednom jedinkom, koja sadr\v{z}i gene, tj delove re\v{s}enja. Nad njima se vr\v{s}e operatori mutacije i ukr\v{s}tanja (kao mehanizam pretrage) i selekcije (usmerava algoritam ka perspektivnim delovima pretra\v{z}iva\v{c}kog prostora).
+
+    	\subsection{Osnovni operatori u genetskim algoritmima}
+            \subsubsection{Selekcija}
+            U osnovnim crtama, princip rada selekcije je sli\v{c}an kao u stvarnom \v{z}ivotu: cilj je da se odabere genetski materijal koji ce se preneti u narednu generaciju. Kod ovog operatora je bitno sa\v{c}uvati raznovrsnost, kao i kvalitet genetskog materiala, ina\v{c}e \'{c}e se dobra re\v{s}enja mo\v{z}da zauvek izgubiti.
+            \subsubsection{Ukr\v{s}tanje}
+            Cilj ovog operatora je da se ukr\v{s}tanjem dva postoje\'{c}a re\v{s}enja dobiju nova, obi\v{c}no kvalitetnija re\v{s}enja.
+            \subsubsection{Mutacija}
+            Mutacijom se vra\'{c}a raznovrsnog genetskog materijala u populaciju. Ipak, prekomerna mutacija mo\v{z}e svesti algoritam na nasumi\v{c}nu pretragu, pa se zato uvodi verovatnoca mutacije, koja je uglavnom manja od 5\%.
+    	\subsection{\v{S}ta su NP problemi?}
+    	NP problemi su klasa problema za koje se veruje da ne postoji deterministi\v{c}ki polinomni algoritam koji ih re\v{s}ava. Ta\v{c}nije, NP problemi obuhvataju NP tvrde (kojima pripada i problem Trgova\v{c}kog putnika) i NP kompletne.
+        \begin{description}
+          \item[NP kompletni] problemi su ,,te\v{s}ki'' za re\v{s}avanje, ali se provera korektnosti njihovih re\v{s}enja izvodi u polinomnom vremenu
+          \item[NP tvrdi] problemi su te\v{s}ki bar koliko i najte\v{z}i NP kompletni problemi, ali za proveravanje njihovih re\v{s}enja ne postoji algoritam polinomne slo\v{z}enosti
+        \end{description}
+        \subsection{\v{S}ta je problem trgova\v{c}kog putnika?}
+        Problem trgova\v{c}kog putnika (engl. Travelling Salesman Problem - TSP) pripada klasi NP problema i defini\v{s}e se na slede\'{c}i na\v{c}in:
+         \begin{df}
+        Ako je dat kompletan te\v{z}inski graf, naci najkra\'{c}u putanju koja prolazi kroz sve \v{c}vorove grafa (Hamiltonovu putanju)
+        \end{df}
+        U literaturi se ponekad navodi i ,,Decision problem'', tj
+        \begin{df}
+        Ako je dat skup gradova i du\v{z}ina puta L, treba odrediti da li postoji Hamiltonov put kra\'{c}i od L?
+        \end{df}
+    \section{Kori\v{s}\'{c}ene metode}
+        \subsection{Selekcija}
+        U ovom radu su kori\v{s}cena su dva algoritma za selekciju:
+        \begin{description}
+          \item[Prosta, rulet selekcija] Ako je f_i 
+          \item[Selekcija zasnovana na rangu] sdf
+        \end{description}
+    
+	\end{document} 
