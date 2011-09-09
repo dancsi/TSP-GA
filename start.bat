@@ -1,1 +1,1 @@
-cmd /K make&cls
+cmd /K "make rebuild"&cls

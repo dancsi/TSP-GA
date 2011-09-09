@@ -71,6 +71,7 @@ namespace Init
 		ga->pMutation(0.1);
 		ga->pCrossover(1.0);
 		ga->pMutation(0.3);
+		ga->terminator(Terminator);
 		//ga->pConvergence(1);
 		ga->selectScores(GAStatistics::AllScores);
 		//ga->terminator(GAGeneticAlgorithm::TerminateUponPopConvergence);

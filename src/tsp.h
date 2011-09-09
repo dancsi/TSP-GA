@@ -29,5 +29,6 @@ extern GAListGenome<int>* genome;
 extern GASteadyStateGA* ga;
 extern int seed;
 extern std::ostream& dbg;
+extern float BestLength, WorstLength;
 
 #endif // TSP_H_INCLUDED

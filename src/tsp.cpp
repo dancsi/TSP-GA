@@ -17,3 +17,5 @@ GAListGenome<int>* genome;
 GASteadyStateGA* ga;
 int seed;
 std::ostream& dbg=std::cerr;
+
+float BestLength, WorstLength;

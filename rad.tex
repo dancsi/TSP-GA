@@ -10,6 +10,20 @@
 
 \theoremstyle{definition}
 \newtheorem{df}[thm]{Definicija}
+
+\newtheoremstyle{algorithm}	
+{\topsep}                    % Space above
+    {\topsep}                    % Space below
+    {\itshape}                   % Body font
+    {}                           % Indent amount
+    {\scshape}                   % Theorem head font
+    {:}                          % Punctuation after theorem head
+    {\newline}                       % Space after theorem head
+    {}  % Theorem head spec (can be left empty, meaning ‘normal’)
+
+\theoremstyle{algorithm}
+\newtheorem*{alg}{Algoritam}
+
 \begin{document}
 
 	\title{\sc Geneteski Algoritmi i Problem Trgova\v{c}kog Putnika}
@@ -81,7 +95,8 @@
         Kori\v{s}cena su 2 algoritma za ukr\v{s}tanje:
         \begin{description}
           \item[Ukr\v{s}tanje rekombinacijom grana (edge recombination)]
-            Ovaj algoritam od 2 roditelja pravi 1 dete, i to na sledeci nacin:
+            Ovaj algoritam od 2 roditelja pravi 1 dete, i to na sledeci nacin:\\
+            \begin{alg}
             \begin{enumerate}
               \item Konstrui\v{s}e matrice povezanosti:
               $\begin{array}{ccc}
@@ -110,6 +125,7 @@
               $L_{i+1}$ je sused \v{c}vora $L_i$, takav da $L_{i+1}$ ima najmanji mogu\'{c}i broj suseda, i ne nalazi se ve\'{c} u $L$
               \item Lista $L$ je nova jedinka
             \end{enumerate}
+            \end{alg}
           \item[Ukr\v{s}tanje parcijalnim mapiranjem] Ovaj algoritam proizvodi 2 potomka od 2 roditelja.
           \begin{itemize}
             \item Odaberu se 2 cvora po slu\v{c}ajnom izboru, $a$ i $b$
@@ -118,5 +134,18 @@
             \item Ostatak \v{c}vorova se u decu dodaje na slu\v{c}ajan na\v{c}in
           \end{itemize}
         \end{description}
-        
+        \subsection{Mutacija}
+        Kori\v{s}\'{c}ena su 2 algoritma za mutaciju:
+        \begin{description}
+          \item[Greedy mutacija]
+            Biraju se 2 slu\v{c}ajna grada, i gleda se da li se njihovom zamenom dobija kra\'{c}i put. 
+          \item[2opt mutacija]
+            \begin{enumerate} 
+              \item Biraju se 2 para susednih gradova, $(a_1, b_1)$ i $(a_2, b_2)$
+              \item Ako je $d(a_1, b_2)+d(a_2, b_1)<d(a_1, b_1)+ d(a_2, b_2)$, ivice $(a_1, b_1)$ i $(a_2, b_2)$ se bri\v{s}u i dodaju se ivice $(a_1, b_2)$ i $(a_2, b_1)$
+            \end{enumerate}
+        \end{description}
+    \section{Rezultati}
+    \section{Reference}
+    
 	\end{document} 

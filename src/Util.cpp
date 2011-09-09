@@ -110,3 +110,10 @@ float Comparator(const GAGenome& g1, const GAGenome& g2)
     delete[] CM2;
     return (dist);
 }
+
+GABoolean Terminator(GAGeneticAlgorithm& g)
+{
+	if((BestLength!=0.0)&&((WorstLength/BestLength)<=1.00005||g.population().best()==g.population().worst()))
+		return gaTrue;
+	else return gaFalse;
+}
