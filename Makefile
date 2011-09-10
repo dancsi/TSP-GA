@@ -4,13 +4,13 @@ OBJ_FILES := $(patsubst src/%.cpp,obj/%.o,$(CPP_FILES)) $(patsubst src/ga/%.C,ob
 LD_FLAGS := -lopengl32 -lmingw32 -lsdlmain -lsdl.dll
 CC_FLAGS := -O2
 
-all: obj
+all: objs
 	g++ $(CC_FLAGS) $(OBJ_FILES) $(LD_FLAGS) -o tsp.exe
 
 benchmark: benchobj
 	g++ $(CC_FLAGS) $(OBJ_FILES) $(LD_FLAGS) -o tsp_benchmark.exe
 	
-obj: 
+objs: 
 	g++ -c $(CC_FLAGS) $(CPP_FILES) $(C_FILES) 
 	rm -rf obj
 	mkdir obj
