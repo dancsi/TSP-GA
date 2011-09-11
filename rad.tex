@@ -1,5 +1,5 @@
 \documentclass[titlepage]{article}
-\usepackage{amsthm,amssymb,amsmath,latexsym,graphicx}
+\usepackage{amsthm,amssymb,amsmath,latexsym,graphicx, epsf, float}
 \usepackage[serbian]{babel}	
 \usepackage[T1]{fontenc}
 %\newcommand{\qed}{\hfill $\Box$\vspace*{4mm}}
@@ -34,7 +34,8 @@
 	\maketitle
 
 	\begin{abstract}
-		Ovaj rad se bavi primenom genetskih algoritama u re\v{s}avanju problema trgova\v{c}kog putnika. \\
+		Ovaj rad se bavi primenom genetskih algoritama(GA) na problem trgova\v{c}kog putnika(TSP). U prvom delu rada, data je definicija problema trgova\v{c}kog putnika, istorijski pregled problema i algoritama za njegovo resavanje. Tako\dj e su navedeni osnovni pojmovi vezani za genetske algoritme.\\
+        Originalni doprinos rada je program koji re\v{s}ava problem trgova\v{c}kog putnika pomocu genetskog algoritma. Algoritam je implementiran u programskom jeziku C++, uz pomo\'{c} biblioteka SDL, OpenGL i GALib. U ovom radu je dat i tehni\v{c}ki opis, na\v{c}in kori\v{s}\'{c}enja programa, kao i pore\dj enje sa rezultatima koji se dobijaju sa drugim algoritmima iz literature.
 	\end{abstract}
 
 	\section{Uvod}
@@ -48,21 +49,22 @@
         \begin{df}[\bf TSP - odlu\v{c}ivanje]
         Ako je dat kompletan te\v{z}inski graf i pozitivan realan broj  $L$, treba odrediti da li postoji Hamiltonov put kra\'{c}i od $L$?\\
         \end{df}
-        
+
         \subsubsection{Istorija}
         TSP prvi put spominju irski i britanski matemati\v{c}ari Sir William Rowan Hamilton i Thomas Penyngton Kirkman sredinom XIX veka. Hamilton je 1857. godine izmislio Ikozijansku igru, u kojoj je cilj da se nadje zatvorena putanja koja prolazi kroz (neke) ivice dodekaedra i svako njegovo teme ta\v{c}no jednom. U dana\v{s}njoj terminologiji, to bi zna\v{c}ilo na\'{c}i Hamiltonovu putanju u grafu kome su \v{c}vorovi temena, a ivice ivice dodekaedra.\\
-        \begin{center}
-          \includegraphics[scale=0.5]{Hamiltonian_path.pdf}
-          slika 1: ikozijanska igra
-        \end{center}
+        \begin{figure}[H]
+          \centering
+          \includegraphics[scale=0.5]{includes/Hamiltonian_path.pdf}
+          \caption{Ikozijanska igra}
+        \end{figure}
         Nakon njih, slede\'{c}a osoba koja se ozbiljno bavila TSP-om je bio Karl Menger, 1930-ih godina. On je u svom radu spomenuo trivijalni brute-force algoritam, konstatovao suboptimalnost heuristike ,,najbli\v{z}eg kom\v{s}ije'' i definisao TSP onako kako se danas defini\v{s}e.\\
         U narednim decenijama, problem je postajao sve vi\v{s}e popularan i izu\v{c}avan od strane mnogih matemati\v{c}ara, informati\v{c}ara, fizi\v{c}ara,...\\
-        
+
         \subsubsection{Algoritmi za re\v{s}avanje TSP}
         O\v{c}igledno, TSP se mo\v{z}e re\v{s}iti brute-force algoritmom(slo\v{z}enosti $\mathcal{O}(n!)$) isprobavaju\'{c}i sve mogu\'{c}e permutacije gradova.
         Danas nije poznat ni jedan daterministi\v{c}ko polinomni algoritam za njegovo re\v{s}avanje - TSP spada u klasu NP tvrdih problema. Me\dj utim, Datzig, Fulkerson i Johnson su u svom radu iz 1954 dali metodu koja se zasniva na celobrojnom programiranju, i iako je jo\v{s} uvek eksponencijalne slo\v{z}enosti, znatno je br\v{z}a od svih ostalih do sada poznatih metoda.\\
         Postoje tako\dj e i aproksimativni algoritmi, npr. genetski algoritmi, Lin-Keringan potezi, tabu pretra\v{z}ivanje, itd.
-        
+
     	\subsection{\v{S}ta su genetski algoritmi i \v{c}emu slu\v{z}e?}
     		Genetski algoritmi (u daljem tekstu GA) su porodica algoritama inspirisanih Darvinovom teorijom evolucije. Prvi radovi iz ove oblasti su nastali 60-tih godina pro\v{s}log veka, ali se u ve\'{c}ini izvora kao tvorac ove oblasti uzima John Holland. On je 1975. godine napisao knjigu "Adaptation in natural and artificial systems".
         GA imaju za cilj re\v{s}avanje problema kombinatorne optimizacije, tj problema u kojima se tra\v{z}i minimum ili maksimum neke funkcije . Po\v{s}to je prostor pretra\v{z}ivanja (skup re\v{s}enja) ponekad prevelik (i njegovo kompletno pretra\v{z}ivanje se ne mo\v{z}e izvr\v{s}iti u nekom doglednom vremenu), a optimalno re\v{s}enje nije neophodno (prihvata se i neko pribli\v{z}no, suboptimalno re\v{s}enje), mogu se koristiti genetski algoritmi. \\
@@ -73,7 +75,7 @@
                 {\bf Fitness funkcija} je genetski operator koji svakoj jedinki dodeljuje vrednost $f_i$ koja oslikava kvalitet te jedinke.
             \end{df}
             Kod TSP, to je ukupna du\v{z}ina puta predstavljenog tom jedinkom.\\
-            
+
             Slede\'{c}i operator je operator selekcije. U osnovnim crtama, princip rada selekcije je sli\v{c}an kao u stvarnom \v{z}ivotu: cilj je da se odabere genetski materijal koji ce se preneti u narednu generaciju. Kod ovog operatora je bitno sa\v{c}uvati raznovrsnost, kao i kvalitet genetskog materiala, ina\v{c}e \'{c}e se dobra re\v{s}enja mo\v{z}da zauvek izgubiti.
             \begin{df}
                 {\bf Selekcija} je genetski operator koji bira jedinke koje \'{c}e se ukr\v{s}tati i/ili preneti u slede\'{c}u generaciju.
@@ -166,9 +168,32 @@
         ID_2 & X_2 & Y_2 \\
         \vdots & \vdots & \vdots \\
         ID_n & X_n & Y_n \\
-        \end{array}$$ 
+        \end{array}$$
         pri \v{c}emu su koordinate bilo koji realni brojevi, a $ID_i$ ceo broj. Tako snimljeni fajl se samo prevu\v{c}e na $tsp.exe$. Tog trenutka \'{c}e se zapo\v{c}eti inicijalizacija, i za par trenutaka \'{c}e se pojaviti grafi\v{c}ki prikaz optimalnog re\v{s}enja. Program prestaje sa radom kada populacija potpuno konvergira(za 250 gradova za par sekundi, a za 1000, to je otprilike 2min). U konzoli se vidi du\v{z}ina najboljeg i najgoreg puta u trenutnoj generaciji, kao i njihov odnos.
         \subsection{Primeri}
-    \section{Reference}
-
+        \begin{rem}
+           Crvenim linijama je prikazana put generisan algoritmom iz ovog rada, a plavim isprekidanim linijama put generisan Lin-Keringhan heuristikom.
+        \end{rem}
+        \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{includes/r10.pdf}
+        \includegraphics[scale=0.5]{includes/r50.pdf}
+        \caption{Primeri sa 10 i 50 gradova}
+        %\label{asd}
+        \end{figure}
+        \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{includes/r100.pdf}
+        \includegraphics[scale=0.5]{includes/r200.pdf}
+        \caption{Primeri sa 100 i 200 gradova}
+        \end{figure}
+    \begin{thebibliography}{33} \frenchspacing
+    \bibitem{Debela} Thomas H. Cormen, Charles E. Leiserson, Ronald R. Rivest, Clifford Stein, Introduction to Algorithms, MIT Press, Cambridge MA, 2009.
+    \bibitem{Kratica} Jozef J. Kratica, Paralelizacija Genetskih Algoritama za Re\v{s}avanje nekih NP-kompletnih Problema, Doktorska disertacija, Beograd, 2000.
+    \bibitem{GatechHistory} www.tsp.gatech.edu/history/index.html
+    \bibitem{WikiTSP} en.wikipedia.org/wiki/Travelling\_salesman\_problem
+    \bibitem{WikiNP} en.wikipedia.org/wiki/NP\_(complexity)
+    \bibitem{WikiNPC} en.wikipedia.org/wiki/NP-complete
+    \bibitem{GALib} lancet.mit.edu/ga/
+    \end{thebibliography}
 	\end{document} 
