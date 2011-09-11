@@ -55,6 +55,7 @@ namespace Init
 	}
 	void GAStuff()
 	{
+		GARandomSeed(1);
 		genome = new GAListGenome<int>(Objective);
 		genome->initializer(::Initializer);
 		genome->mutator(::Mutator);
