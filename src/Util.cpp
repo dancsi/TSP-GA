@@ -35,6 +35,17 @@ void Initializer(GAGenome& _g)
     }
     //GAPopulation p=ga->population();
     delete[] visited;
+	if(GAFlipCoin(0.3))
+	{
+		g.head();
+		for(int i=0;i<ntowns;i++)
+		{
+			if(GARandomBit())
+			{
+				std::swap(*g.current(), *g.next());
+			}
+		}
+	}
 }
 
 

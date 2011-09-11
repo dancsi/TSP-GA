@@ -13,7 +13,7 @@ namespace Graphics
 	extern float minx, miny, maxx, maxy;
 	void Init(int width, int height);
 	void Scale(bool b=true);
-	void DrawGenome(GAListGenome<int> & genome, GLubyte r=255, GLubyte g=255, GLubyte b=255);
+	void DrawGenome(GAListGenome<int> & genome, GLubyte r=255, GLubyte g=0, GLubyte b=0);
 	void DrawTowns();
 	void CircleFill(double _x, double _y,double _HRadius, int _vertices);
 	void PushCircle(double _x, double _y,double _HRadius, int _vertices);

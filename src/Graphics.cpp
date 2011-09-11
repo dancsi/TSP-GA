@@ -16,7 +16,7 @@ namespace Graphics
 		SDL_Init( SDL_INIT_EVERYTHING );
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); 
 		SDL_SetVideoMode( width, height, 32, SDL_OPENGL );
-		glClearColor( 0, 0, 0, 0 );
+		glClearColor( 1, 1, 1, 0 );
 		glMatrixMode( GL_PROJECTION );
 		glLoadIdentity();
 		glOrtho( 0, width, 0, height, -1, 1 );
@@ -64,7 +64,7 @@ namespace Graphics
 		}
 		glClear(GL_COLOR_BUFFER_BIT);
 		glNewList(displayList, GL_COMPILE); 
-			glColor3f(1, 0, 0);
+			glColor3f(0, 0, 0);
 			for(int i=0;i<ntowns;i++)
 			{
 				CircleFill(towns[i].sx, towns[i].sy, 5, 4);

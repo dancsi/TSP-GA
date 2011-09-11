@@ -1,7 +1,5 @@
 #include "tsp.h"
 
-FILE* fout;
-
 int main(int argc, char *argv[])
 {
     if(argc>1)
@@ -34,38 +32,37 @@ int main(int argc, char *argv[])
 #ifndef BENCHMARK
 		Graphics::DrawTowns();
 		glLineWidth(1);
-		Graphics::DrawGenome(worst, 80, 80, 80);
+		Graphics::DrawGenome(worst, 0, 0, 128);
 		glLineWidth(2);
 		Graphics::DrawGenome(best);
 		SDL_GL_SwapBuffers();
-#endif		
-		fout=fopen("best.dat", "w");
+#endif
 		BestLength=0, WorstLength=0;
-		if(best.head()&&worst.head())	
+		if(best.head()&&worst.head())
 		{
 			for(int i=0; i<ntowns; i++)
 			{
 				int xb = *best.current();
 				int xw = *worst.current();
-				fprintf(fout, "%d ", xb);
 				int yb = *best.next();
 				int yw = *worst.next();
 				BestLength+=DISTANCE[xb][yb];
 				WorstLength+=DISTANCE[xw][yw];
-				
+
 			}
-			fprintf(fout, ": %f\n", BestLength);
 			//Graphics::ScreenDump("screenshot.tga", Graphics::SCREEN_WIDTH, Graphics::SCREEN_HEIGHT);
 		}
-		fclose(fout);
 		float ratio = WorstLength/BestLength;
 		dbg<<BestLength<<" <-> "<<WorstLength<<", ratio: "<<ratio<<'\n';
     }
-	
+
     *genome = ga->statistics().bestIndividual();
+	std::ofstream out("best.dat");
     std::cout << "najkraci put je " << genome->score() << "\n";
+	out<<*genome<<": "<<genome->score();
     std::cout << "gradovi\n";
     std::cout << *genome << "\n\n";
+	out.close();
     //std::cout << ga->statistics() << "\n";
 #ifndef BENCHMARK
 	bool running=true;
@@ -77,7 +74,7 @@ int main(int argc, char *argv[])
 			if(e.type==SDL_MOUSEBUTTONUP)
 				running=false;
 		}
-	} 
+	}
 #endif
     return 0;
 }
