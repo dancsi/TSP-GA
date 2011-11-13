@@ -26,7 +26,7 @@
 
 \begin{document}
 
-	\title{\sc Geneteski Algoritmi i Problem Trgova\v{c}kog Putnika}
+	\title{\sc Genetski Algoritmi i Problem Trgova\v{c}kog Putnika}
 
 	\author{Daniel Sila\dj i\\
 		Gimnazija "Jovan Jovanovi\'{c} Zmaj"\\
@@ -34,41 +34,43 @@
 	\maketitle
 
 	\begin{abstract}
-		Ovaj rad se bavi primenom genetskih algoritama(GA) na problem trgova\v{c}kog putnika(TSP). U prvom delu rada, data je definicija problema trgova\v{c}kog putnika, istorijski pregled problema i algoritama za njegovo resavanje. Tako\dj e su navedeni osnovni pojmovi vezani za genetske algoritme.\\
-        Originalni doprinos rada je program koji re\v{s}ava problem trgova\v{c}kog putnika pomocu genetskog algoritma. Algoritam je implementiran u programskom jeziku C++, uz pomo\'{c} biblioteka SDL, OpenGL i GALib. U ovom radu je dat i tehni\v{c}ki opis, na\v{c}in kori\v{s}\'{c}enja programa, kao i pore\dj enje sa rezultatima koji se dobijaju sa drugim algoritmima iz literature.
+		Ovaj rad se bavi primenom genetskih algoritama (GA) na problem trgova\v{c}kog putnika (TSP). U prvom delu rada, data je definicija problema trgova\v{c}kog putnika, istorijski pregled problema i algoritama za njegovo re\v{s}avanje. Tako\dj e su navedeni osnovni pojmovi vezani za genetske algoritme.
+
+        Originalni doprinos rada je program koji re\v{s}ava problem trgova\v{c}kog putnika pomo\'{c}u genetskog algoritma. Algoritam je implementiran u programskom jeziku C++, uz pomo\'{c} biblioteka SDL, OpenGL i GALib. U ovom radu je dat i tehni\v{c}ki opis, na\v{c}in kori\v{s}\'{c}enja programa, kao i pore\dj enje sa rezultatima koji se dobijaju sa drugim algoritmima iz literature.
 	\end{abstract}
 
 	\section{Uvod}
         \subsection{\v{S}ta je problem trgova\v{c}kog putnika?}
-        Neformalno, problem trgova\v{c}kog putnika (engl. Travelling Salesman Problem - TSP) mo\v{z}emo formulisati na slede\'{c}i nacin: Dato je n gradova, poznate su sve udaljenosti me\dj u njima; trgova\v{c}ki putnik treba da obi\dj e sve te gradove i da se na kraju vrati u grad odakle je krenuo, a da pri tome pre\dj e najkra\'{c}u razdaljinu.
+        Neformalno, problem trgova\v{c}kog putnika (engl. Travelling Salesman Problem - TSP) mo\v{z}emo formulisati na slede\'{c}i na\v{c}in: Dato je n gradova, poznate su sve udaljenosti me\dj u njima; trgova\v{c}ki putnik treba da obi\dj e sve te gradove i da se na kraju vrati u grad odakle je krenuo, a da pri tome pre\dj e najkra\'{c}u razdaljinu.
         Formalna definicija problema trgova\v{c}kog putnika glasi:
         \begin{df}[\bf Problem trgova\v{c}kog putnika-TSP]
-        Ako je dat kompletan neusmeren te\v{z}inski graf, sa nenegativnim celobrojnim te\v{z}inama naci Hamiltonovu putanju sa najmanjom te\v{z}inom.
+        Ako je dat kompletan neusmeren te\v{z}inski graf, sa nenegativnim celobrojnim te\v{z}inama na\'{c}i Hamiltonovu putanju sa najmanjom te\v{z}inom.
         \end{df}
         Pored optimizacijske varijante ovog problema, postoji i tzv. forma problema odlu\v{c}ivanja:
         \begin{df}[\bf TSP - odlu\v{c}ivanje]
-        Ako je dat kompletan te\v{z}inski graf i pozitivan realan broj  $L$, treba odrediti da li postoji Hamiltonov put kra\'{c}i od $L$?\\
+        Ako je dat kompletan te\v{z}inski graf i pozitivan realan broj  $L$, treba odrediti da li postoji Hamiltonov put kra\'{c}i od $L$?
         \end{df}
 
         \subsubsection{Istorija}
-        TSP prvi put spominju irski i britanski matemati\v{c}ari Sir William Rowan Hamilton i Thomas Penyngton Kirkman sredinom XIX veka. Hamilton je 1857. godine izmislio Ikozijansku igru, u kojoj je cilj da se nadje zatvorena putanja koja prolazi kroz (neke) ivice dodekaedra i svako njegovo teme ta\v{c}no jednom. U dana\v{s}njoj terminologiji, to bi zna\v{c}ilo na\'{c}i Hamiltonovu putanju u grafu kome su \v{c}vorovi temena, a ivice ivice dodekaedra.\\
+        TSP prvi put spominju irski i britanski matemati\v{c}ari Sir William Rowan Hamilton i Thomas Penyngton Kirkman sredinom XIX veka. Hamilton je 1857. godine izmislio Ikozijansku igru, u kojoj je cilj da se nadje zatvorena putanja koja prolazi kroz (neke) ivice dodekaedra i svako njegovo teme ta\v{c}no jednom. U dana\v{s}njoj terminologiji, to bi zna\v{c}ilo na\'{c}i Hamiltonovu putanju u grafu kome su \v{c}vorovi temena, a ivice ivice dodekaedra.
         \begin{figure}[H]
           \centering
           \includegraphics[scale=0.5]{includes/Hamiltonian_path.pdf}
           \caption{Ikozijanska igra}
         \end{figure}
-        Nakon njih, slede\'{c}a osoba koja se ozbiljno bavila TSP-om je bio Karl Menger, 1930-ih godina. On je u svom radu spomenuo trivijalni brute-force algoritam, konstatovao suboptimalnost heuristike ,,najbli\v{z}eg kom\v{s}ije'' i definisao TSP onako kako se danas defini\v{s}e.\\
-        U narednim decenijama, problem je postajao sve vi\v{s}e popularan i izu\v{c}avan od strane mnogih matemati\v{c}ara, informati\v{c}ara, fizi\v{c}ara,...\\
+        Nakon njih, slede\'{c}a osoba koja se ozbiljno bavila TSP-om je bio Karl Menger, 1930-ih godina. On je u svom radu spomenuo trivijalni brute-force algoritam, konstatovao suboptimalnost heuristike ,,najbli\v{z}eg kom\v{s}ije'' i definisao TSP onako kako se danas defini\v{s}e.
+        U narednim decenijama, problem je postajao sve vi\v{s}e popularan i izu\v{c}avan od strane mnogih matemati\v{c}ara, informati\v{c}ara, fizi\v{c}ara,...
 
         \subsubsection{Algoritmi za re\v{s}avanje TSP}
         O\v{c}igledno, TSP se mo\v{z}e re\v{s}iti brute-force algoritmom(slo\v{z}enosti $\mathcal{O}(n!)$) isprobavaju\'{c}i sve mogu\'{c}e permutacije gradova.
-        Danas nije poznat ni jedan daterministi\v{c}ko polinomni algoritam za njegovo re\v{s}avanje - TSP spada u klasu NP tvrdih problema. Me\dj utim, Datzig, Fulkerson i Johnson su u svom radu iz 1954 dali metodu koja se zasniva na celobrojnom programiranju, i iako je jo\v{s} uvek eksponencijalne slo\v{z}enosti, znatno je br\v{z}a od svih ostalih do sada poznatih metoda.\\
+        Danas nije poznat ni jedan daterministi\v{c}ko polinomni algoritam za njegovo re\v{s}avanje - TSP spada u klasu NP tvrdih problema. Me\dj utim, Datzig, Fulkerson i Johnson su u svom radu \cite{Cutting} dali metodu koja se zasniva na celobrojnom programiranju, i iako je jo\v{s} uvek eksponencijalne slo\v{z}enosti, znatno je br\v{z}a od svih ostalih do sada poznatih metoda \cite{CuttingImpl}.
         Postoje tako\dj e i aproksimativni algoritmi, npr. genetski algoritmi, Lin-Keringan potezi, tabu pretra\v{z}ivanje, itd.
 
     	\subsection{\v{S}ta su genetski algoritmi i \v{c}emu slu\v{z}e?}
-    		Genetski algoritmi (u daljem tekstu GA) su porodica algoritama inspirisanih Darvinovom teorijom evolucije. Prvi radovi iz ove oblasti su nastali 60-tih godina pro\v{s}log veka, ali se u ve\'{c}ini izvora kao tvorac ove oblasti uzima John Holland. On je 1975. godine napisao knjigu "Adaptation in natural and artificial systems".
-        GA imaju za cilj re\v{s}avanje problema kombinatorne optimizacije, tj problema u kojima se tra\v{z}i minimum ili maksimum neke funkcije . Po\v{s}to je prostor pretra\v{z}ivanja (skup re\v{s}enja) ponekad prevelik (i njegovo kompletno pretra\v{z}ivanje se ne mo\v{z}e izvr\v{s}iti u nekom doglednom vremenu), a optimalno re\v{s}enje nije neophodno (prihvata se i neko pribli\v{z}no, suboptimalno re\v{s}enje), mogu se koristiti genetski algoritmi. \\
-      U GA, svako pjedina\v{c}no re\v{s}enje je predstavljeno jednom jedinkom, koja sadr\v{z}i gene, tj delove re\v{s}enja. Nad njima se vr\v{s}e operatori mutacije i ukr\v{s}tanja (kao mehanizam pretrage) i selekcije (usmerava algoritam ka perspektivnim delovima pretra\v{z}iva\v{c}kog prostora).
+    		Genetski algoritmi (u daljem tekstu GA) su porodica algoritama inspirisanih Darvinovom teorijom evolucije. Prvi radovi iz ove oblasti su nastali 60-tih godina pro\v{s}log veka, ali se u ve\'{c}ini izvora kao tvorac ove oblasti uzima John Holland. On je 1975. godine napisao knjigu \cite{Holland}.
+        GA imaju za cilj re\v{s}avanje problema kombinatorne optimizacije, tj problema u kojima se tra\v{z}i minimum ili maksimum neke funkcije . Po\v{s}to je prostor pretra\v{z}ivanja (skup re\v{s}enja) ponekad prevelik (i njegovo kompletno pretra\v{z}ivanje se ne mo\v{z}e izvr\v{s}iti u nekom doglednom vremenu), a optimalno re\v{s}enje nije neophodno (prihvata se i neko pribli\v{z}no, suboptimalno re\v{s}enje), mogu se koristiti genetski algoritmi.
+
+      U GA, svako pojedina\v{c}no re\v{s}enje je predstavljeno jednom jedinkom, koja sadr\v{z}i gene, tj delove re\v{s}enja. Nad njima se vr\v{s}e operatori mutacije i ukr\v{s}tanja (kao mehanizam pretrage) i selekcije (usmerava algoritam ka perspektivnim delovima pretra\v{z}iva\v{c}kog prostora).
 
     	\subsection{Osnovni operatori u genetskim algoritmima}
             \begin{df}
@@ -90,21 +92,21 @@
             Mutacijom se vra\'{c}a raznovrsnog genetskog materijala u populaciju. Ipak, prekomerna mutacija mo\v{z}e svesti algoritam na nasumi\v{c}nu pretragu, pa se zato uvodi verovatnoca mutacije, koja je uglavnom manja od 5\%.
     \section{Kori\v{s}\'{c}ene metode}
         \subsection{Konstrukcija po\v{c}etnog re\v{s}enja}
-        Za konstrukciju po\v{c}etnog re\v{s}enja koji\v{s}cen je greedy algoritam koji od zadatog po\v{c}etnog grada gradi put tako \v{s}to uvek bira grad najbli\v{z}i poslednjem dodatom gradu. Iako je ovaj pristup suboptimalan, u praksi naj\v{c}e\v{s}\'{c}e daj prili\v{c}no dobra re\v{s}enja koja se od optimalnog retko razlikuju za vi\v{s}e od 10\%.
+        Za konstrukciju po\v{c}etnog re\v{s}enja koji\v{s}\'{c}en je greedy algoritam koji od zadatog po\v{c}etnog grada gradi put tako \v{s}to uvek bira grad najbli\v{z}i poslednjem dodatom gradu. Iako je ovaj pristup suboptimalan, u praksi naj\v{c}e\v{s}\'{c}e daj prili\v{c}no dobra re\v{s}enja koja se od optimalnog retko razlikuju za vi\v{s}e od 10\%.
         % TODO: Grafik optimalnih i greedy re\v{senja}
         \subsection{Selekcija}
-        U ovom radu su kori\v{s}cena su dva algoritma za selekciju:
+        U ovom radu su kori\v{s}\'{c}ena su dva algoritma za selekciju:
         \begin{rem}
-            Promenljiva $f_i$ predstavlja vrednost fitness-funkcije $i$-te jedinke u populaciji,  $p_i$ verovatnocu da bas $i$-ta jedinka bude odabrana prilikom selekcije, a $r_i$ rang $i$-te jedinke, tako da najkvalitetnija jedinka (gledaju\'{c}i fitness) ima rang $1$, a najnekvalitetnija $n$. Tako\dj{}e, va\v{z}i pretpostavka da u populaciji ima ta\v{c}no $n$ jedinki.
+            Promenljiva $f_i$ predstavlja vrednost fitness-funkcije $i$-te jedinke u populaciji,  $p_i$ verovatno\'{c}u da bas $i$-ta jedinka bude odabrana prilikom selekcije, a $r_i$ rang $i$-te jedinke, tako da najkvalitetnija jedinka (gledaju\'{c}i fitness) ima rang $n$, a najnekvalitetnija $1$. Tako\dj{}e, va\v{z}i pretpostavka da u populaciji ima ta\v{c}no $n$ jedinki.
         \end{rem}
         \begin{description}
           \item[Prosta, rulet selekcija]
             Svaka jedinka ima verovatno\'{c}u selekcije direktno proporcionalnu njenoj fitness-vrednosti, tj: $$p_i=\frac{f_i}{\sum_{i=1}^{n}{f_j}}$$
           \item[Selekcija zasnovana na rangu]
-            Svaka jedinka ima verovatno\'{c}u selekcije direktno proporcionalnu njenom rangu, tj: $$p_i=\frac{r_i}{\sum_{i=1}^{n}{j}}$$
+            Svaka jedinka ima verovatno\'{c}u selekcije direktno proporcionalnu njenom rangu, tj: $$p_i=\frac{r_i}{\sum_{j=1}^{n}{r_j}}$$
         \end{description}
         \subsection{Ukr\v{s}tanje}
-        Kori\v{s}cena su 2 algoritma za ukr\v{s}tanje:
+        Kori\v{s}\'{c}ena su 2 algoritma za ukr\v{s}tanje:
         \begin{description}
           \item[Ukr\v{s}tanje rekombinacijom grana (edge recombination)]
             Ovaj algoritam od 2 roditelja pravi 1 dete, i to na sledeci nacin:\\
@@ -139,12 +141,14 @@
             \end{enumerate}
             \end{alg}
           \item[Ukr\v{s}tanje parcijalnim mapiranjem] Ovaj algoritam proizvodi 2 potomka od 2 roditelja.
-          \begin{itemize}
+          \begin{alg}
+          \begin{enumerate}
             \item Odaberu se 2 cvora po slu\v{c}ajnom izboru, $a$ i $b$
             \item Iz roditelja 1 se kopira put od $a$ do $b$ u dete 1, a iz roditelja 2 u dete 2.
             \item Dokle god to mo\v{z}e (tj. dok se svaki \v{c}vor javalja samo jednom u detetu), algoritam popunjava pozicije u detetu 1 sa putevima iz roditelja 2 i  u detetu 2 sa putevima iz roditelja 2
             \item Ostatak \v{c}vorova se u decu dodaje na slu\v{c}ajan na\v{c}in
-          \end{itemize}
+          \end{enumerate}
+        \end{alg}
         \end{description}
         \subsection{Mutacija}
         Kori\v{s}\'{c}ena su 2 algoritma za mutaciju:
@@ -152,17 +156,20 @@
           \item[Greedy mutacija]
             Biraju se 2 slu\v{c}ajna grada, i gleda se da li se njihovom zamenom dobija kra\'{c}i put.
           \item[2opt mutacija]
+          \begin{alg}
             \begin{enumerate}
               \item Biraju se 2 para susednih gradova, $(a_1, b_1)$ i $(a_2, b_2)$
               \item Ako je $d(a_1, b_2)+d(a_2, b_1)<d(a_1, b_1)+ d(a_2, b_2)$, ivice $(a_1, b_1)$ i $(a_2, b_2)$ se bri\v{s}u i dodaju se ivice $(a_1, b_2)$ i $(a_2, b_1)$
             \end{enumerate}
+          \end{alg}
         \end{description}
     \section{Rezultati}
         \subsection{Tehni\v{c}ki detalji}
-        Program je napisan u programskom jeziku C++. Kao osnova za genetski algoritam, kori\v{s}\'{c}ena je biblioteka GALib, verzija 2.4.7, autora Mathew Wall-a sa MIT-a. Za grafi\v{c} prikaz su kori\v{s}\'{c}ene biblioteke SDL i OpenGL. \\
-        U planu je izrada korisni\v{c}kog interfejsa, gde korisnik mo\v{z}e da bira izme\dj u grafi\v{c}kog i tekstualnog unosa podataka(koordinata gradova).
+        Program je napisan u programskom jeziku C++. Kao osnova za genetski algoritam, kori\v{s}\'{c}ena je biblioteka GALib, verzija 2.4.7, autora Mathew Wall-a sa MIT-a. Za grafi\v{c}ki prikaz su kori\v{s}\'{c}ene biblioteke SDL i OpenGL.
+
+        U planu je izrada korisni\v{c}kog interfejsa, gde korisnik mo\v{z}e da bira izme\dj u grafi\v{c}kog i tekstualnog unosa podataka(koordinata gradova). U rar fajlu se nalazi sve sto je potrebno za pokretanje na 64-bitnom Windowsu. Makefile je pravljen takodje za Windows, i potrebno je imati sdl i opengl header-e negde gde kompajler moze da ih nadje.
         \subsection{Na\v{c}in upotrebe programa}
-        Glavni algoritam se nalazi u programu pod imenom tsp.exe. Program se koristi uno\v{s}enjem koordinata gradova u fajl, i to u slede\'{c}em formatu:\\
+        Glavni algoritam se nalazi u programu pod imenom tsp.exe. Program se koristi uno\v{s}enjem koordinata gradova u fajl, i to u slede\'{c}em formatu:
         $$\begin{array}{ccc}
         ID_1 & X_1 & Y_1 \\
         ID_2 & X_2 & Y_2 \\
@@ -171,9 +178,12 @@
         \end{array}$$
         pri \v{c}emu su koordinate bilo koji realni brojevi, a $ID_i$ ceo broj. Tako snimljeni fajl se samo prevu\v{c}e na $tsp.exe$. Tog trenutka \'{c}e se zapo\v{c}eti inicijalizacija, i za par trenutaka \'{c}e se pojaviti grafi\v{c}ki prikaz optimalnog re\v{s}enja. Program prestaje sa radom kada populacija potpuno konvergira(za 250 gradova za par sekundi, a za 1000, to je otprilike 2min). U konzoli se vidi du\v{z}ina najboljeg i najgoreg puta u trenutnoj generaciji, kao i njihov odnos.
         \subsection{Primeri}
-        \begin{rem}
-           Crvenim linijama je prikazana put generisan algoritmom iz ovog rada, a plavim isprekidanim linijama put generisan Lin-Keringhan heuristikom.
-        \end{rem}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.2]{includes/screenshot.png}
+            \caption{Program u toku izvr\v{s}avanja}
+        \end{figure}
+        Na slede\'{c}e 4 slike, prikazane su putanje generisane algoritmom datim u ovom radu,(crvena puna linija), kao i putanje generisane programom LKH (isprekdane plave linije) \cite{LKH}. Slike su dobijene pomo\'{c}u perl skripte $test.pl$ koja je na osnovu tekstualnog izlaza navedenih programa generisala SVG slike, koje su dalje konvertovane u $.png$ format programom Inkscape \cite{Inkscape}.
         \begin{figure}[H]
         \centering
         \includegraphics[scale=0.5]{includes/r10.pdf}
@@ -187,6 +197,22 @@
         \includegraphics[scale=0.5]{includes/r200.pdf}
         \caption{Primeri sa 100 i 200 gradova}
         \end{figure}
+        U slede\'{c}oj tabeli su prikazani uporedni rezultati opisanog algoritma i Lin-Keringhan heuristike iz \cite{LKH}:
+
+        \begin{tabular}{|c|c|c|c|}
+          \hline
+          broj gradova & rezultat GA & rezultat LKH & $\frac{GA}{LKH}$ \\ \hline
+          10 & 93420.1 & 93420.087 & 100\% \\
+          20 & 126105 & 123182.653 &  102.37\%\\
+          50 & 183528 & 180723.382 & 100.01\% \\
+          100 & 259950 & 247460.568 & 105.05\% \\
+          200 & 426510 & 356127.217 & 119.76\% \\
+          \hline
+    \end{tabular}
+    \subsection{Zaklu\v{c}ak}
+    Na osnovu testiranih primera i algoritama, vidi se da GA za manji broj gradova daje optimalno re\v{s}enje, i to u realnom vremenu. Za ve\'{c}i broj gradova (par stotina), algoritam radi ispod 3min i daje re\v{s}enja u proseku 20\% gora nego Lin Keringhan heuristika. Razlog za to je da  se algoritam prekida kada sve jedinke konvergiraju ka najboljoj, odakle je dalji razvoj mogu\'{c} samo mutacijom.
+
+    Prema tome, jedna od mugu\'{c}nosti za pobolj\v{s}anje ovog algoritma je inkorporacija drugih heuristika, kao \v{s}to je LKH. Me\dj utim, op\v{s}ti utisak autora(nastao tokom izrade i testiranja programa) je da GA mo\v{z}da i nisu najbolja metoda za re\v{s}avanje TSP. Za dalji rad verovatno najvi\v{s}e smisla ima okrenuti se celobrojnom programiranju i metodama opisanim u \cite{CuttingImpl}.
     \begin{thebibliography}{33} \frenchspacing
     \bibitem{Debela} Thomas H. Cormen, Charles E. Leiserson, Ronald R. Rivest, Clifford Stein, Introduction to Algorithms, MIT Press, Cambridge MA, 2009.
     \bibitem{Kratica} Jozef J. Kratica, Paralelizacija Genetskih Algoritama za Re\v{s}avanje nekih NP-kompletnih Problema, Doktorska disertacija, Beograd, 2000.
@@ -195,5 +221,11 @@
     \bibitem{WikiNP} en.wikipedia.org/wiki/NP\_(complexity)
     \bibitem{WikiNPC} en.wikipedia.org/wiki/NP-complete
     \bibitem{GALib} lancet.mit.edu/ga/
+    \bibitem{CuttingImpl}David Applegate, Robert Bixby, Va\v{s}ek Chv\'{a}tal, William Cook, Implementing the Dantzig-Fulkerson-Johnson algorithm
+for large traveling salesman problems, Math. Program., Ser. B 97: 91–153 (2003)
+    \bibitem{Cutting} G. Dantzig, R. Fulkerson, and S. Johnson, Solution of a large-scale traveling-salesman problem, Operations Research 2, 393-410
+    \bibitem{Holland} John H. Holland, Adaptation in Natural and Artificial Systems, An Introductory Analysis with Applications to Biology, Control, and Artificial Intelligence, Oxford, England, U Michigan Press, 1975
+    \bibitem{LKH} www.akira.ruc.dk/\~keld/research/LKH/
+    \bibitem{Inkscape} inkscape.org/
     \end{thebibliography}
 	\end{document} 
